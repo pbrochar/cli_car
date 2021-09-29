@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "races",
+  "info": {
+    "name": "race",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "cars": {
+      "collection": "car",
+      "via": "races",
+      "dominant": true
+    },
+    "distance": {
+      "type": "integer"
+    }
+  }
+}
