@@ -2,12 +2,10 @@ import typer
 import json
 import asyncio
 from resources.error import BadCarName
-from resources.race import create_race, delete_race, get_race, list_races
+from resources.race import create_race, delete_race, get_race, list_races, start_race
 from resources.car import get_cars_by_names
-from resources.result import create_results
 from typing import List
-from models.car import Car
-from models.race import Race, run
+from models.race import Race
 from pydantic import ValidationError
 from sys import stderr
 
@@ -55,10 +53,4 @@ def list() -> None:
 
 @ app.command(name="start")
 def start(id: int) -> None:
-    race = get_race(id)
-    cars = [
-        Car(**car.dict())
-        for car in race.cars
-    ]
-    move_times = asyncio.run(run(race))
-    create_results(race, move_times)
+    asyncio.run(start_race(id))

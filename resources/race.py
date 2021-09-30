@@ -1,7 +1,9 @@
 import json
+import asyncio
 from ._request import _request
 from typing import List
-from models.race import Race, RaceView
+from models.race import Race, RaceView, run
+from resources.result import create_results
 from resources.car import get_cars_by_names
 
 
@@ -55,3 +57,9 @@ def list_races() -> List[RaceView]:
         RaceView(**raceview)
         for raceview in response.json()
     ]
+
+
+async def start_race(id: int) -> None:
+    race = get_race(id)
+    move_times = await run(race)
+    create_results(race, move_times)
